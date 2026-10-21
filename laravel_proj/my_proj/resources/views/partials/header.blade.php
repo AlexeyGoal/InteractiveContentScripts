@@ -7,5 +7,6 @@
     <nav>
         <a href="/" style="margin-left: 15px; text-decoration: none; color: #555;">Главная</a>
         <a href="/form" style="margin-left: 15px; text-decoration: none; color: #555;">Форма</a>
+        <a href="/submissions" style="margin-left: 15px; text-decoration: none; color: #555;">Сообщения</a>
     </nav>
 </header>

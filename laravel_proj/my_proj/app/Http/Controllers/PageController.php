@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
+
 class PageController extends Controller
 {
     public function index()
@@ -70,4 +72,35 @@ class PageController extends Controller
             'filename' => $filename,
         ]);
     }
+
+    public function submissions()
+    {
+        $directory = storage_path('app/submissions');
+        $items = [];
+
+        if (is_dir($directory)) {
+            // Получаем все .json файлы
+            $files = File::glob($directory . '/*.json');
+
+            foreach ($files as $file) {
+                $content = file_get_contents($file);
+                $data = json_decode($content, true);
+
+                if (is_array($data)) {
+                    
+                    $data['filename'] = basename($file);
+                    $items[] = $data;
+                }
+            }
+        }
+
+        
+        usort($items, function ($a, $b) {
+            return strcmp($b['created_at'] ?? '', $a['created_at'] ?? '');
+        });
+
+        return view('submissions', ['items' => $items]);
+    }
+
+
 }
