@@ -8,20 +8,13 @@ class PageController extends Controller
 {
     public function index()
     {
-        return 'Hello, World!';
+       return view('home');
     }
 
     
     public function showForm()
     {
-        return '
-            <form method="POST" action="/submit">
-                ' . csrf_field() . '
-                <label>Имя: <input type="text" name="name" required></label>
-                <label>Email: <input type="email" name="email" required></label>
-                <button type="submit">Отправить</button>
-            </form>
-        ';
+       return view('form');
     }
 
     
@@ -32,6 +25,9 @@ class PageController extends Controller
             'email' => 'required|email',
         ]);
 
-        return "Форма успешно отправлена!<br>Имя: {$validated['name']}<br>Email: {$validated['email']}";
+        return view('submit-result', [
+            'name'  => $validated['name'],
+            'email' => $validated['email'],
+        ]);
     }
 }
